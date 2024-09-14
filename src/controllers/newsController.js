@@ -1,18 +1,18 @@
-// controllers/newsController.js
 const newsService = require("../services/newsService");
 
 const getNews = async (req, res) => {
-  const { query, region, category, page = 1 } = req.query;
+  const { q, category, country, lang, page, max } = req.query;
 
-  // Log incoming request data
-  console.log("Incoming request:", { query, region, category, page });
+  console.log("Incoming request:", req.query);
 
   try {
     const newsData = await newsService.fetchNews({
-      query,
-      region,
+      searchTerm: q,
       category,
-      page,
+      country,
+      language: lang,
+      currentPage: page,
+      pageSize: max,
     });
     res.json(newsData);
   } catch (error) {
